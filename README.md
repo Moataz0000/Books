@@ -2,4 +2,4 @@
 
 
 
-This Web Application writer with Class Based View.
+" This web application writer has a class-based view. "
