@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+  
+{% block content %}
+    
+    
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="/" class="text-2xl font-bold text-indigo-600">BookStore</a>
+      <div>
+        <a href="/" class="mx-4 text-gray-600 hover:text-indigo-600">Home</a>
+        <a href="/" class="mx-4 text-gray-600 hover:text-indigo-600">Categories</a>
+        <a href="/" class="mx-4 text-gray-600 hover:text-indigo-600">Login</a>
+        <a href="{% url 'orders:order-book' %}" class="mx-4 text-gray-600 hover:text-indigo-600">Order a book?</a>
+
+      </div>
+    </div>
+  </nav>
+  <!-- Hero Section -->
+  <section class="bg-indigo-600 py-12 text-white text-center">
+    <h1 class="text-4xl font-bold">Welcome to the BookStore</h1>
+    <p class="mt-4 text-lg">Discover your next great read from our collection</p>
+  </section>
+
+   <!-- Categories Section -->
+   <section class="container mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold mb-6">Categories</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Loop through categories from Django -->
+      <a href="{% url 'books:book_list' %}" class="block bg-white p-4 rounded shadow hover:bg-indigo-100 ">
+        <h3 class="text-xl font-semibold">All Books</h3>
+      </a>
+      {% for category in categories %}
+      <a href="{% url 'books:category' category.slug %}" class="block bg-white p-4 rounded shadow hover:bg-indigo-100">
+        <h3 class="text-xl font-semibold">{{ category.title }}</h3>
+      </a>
+      {% endfor %}
+    
+    </div>
+  </section>
+
+  <!-- Books Section -->
+  <section class="container mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold mb-6">Books</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Loop through books from Django -->
+      {% for book in books %}
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="p-4">
+          <h3 class="text-xl font-semibold">{{ book.name }}</h3>
+          <p class="text-gray-600 mt-2">{{ book.overview|truncatewords:20 }}</p>
+          <p class="text-gray-500 mt-4">By: {{ book.author.username }}</p>
+          <p class="text-gray-400 text-sm mt-2">Published: {{ book.created|date:"M d, Y" }}</p>
+          <a href="{% url 'books:book_details' slug=book.slug %}" class="mt-4 inline-block text-indigo-600 hover:text-indigo-800">Read more</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 py-8 text-center text-white">
+    <p>&copy; 2024 BookStore. All rights reserved.</p>
+    <div class="mt-4">
+      <a href="#" class="mx-2 hover:text-indigo-400">About</a>
+      <a href="#" class="mx-2 hover:text-indigo-400">Contact</a>
+      <a href="#" class="mx-2 hover:text-indigo-400">Privacy Policy</a>
+    </div>
+  </footer>
+  
+
+
+{% endblock  %}
+  
